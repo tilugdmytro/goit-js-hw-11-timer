@@ -1,0 +1,29 @@
+.field {
+  font-family: "Amatic SC", cursive;
+  font-size: 30px;
+  color: DarkCyan;
+  margin: 20px;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.value {
+  color: DarkSeaGreen;
+  background-color: beige;
+}
+
+.text {
+  font-family: "Amatic SC", cursive;
+  font-size: 30px;
+  color: DarkCyan;
+  margin: 20px;
+  text-align: center;
+}
+
+.text_special {
+  background-color: beige;
+}
