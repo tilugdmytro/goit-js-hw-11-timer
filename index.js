@@ -1,45 +1,43 @@
-const refs = {
-  getDays: document.querySelector('span[data-value="days"]'),
-  getHours: document.querySelector('span[data-value="hours"]'),
-  getMins: document.querySelector('span[data-value="mins"]'),
-  getSecs: document.querySelector('span[data-value="secs"]'),
-};
-
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.selector = selector;
     this.targetDate = targetDate;
-    this.start();
+    this.timer();
+  }
+
+  getRefs() {
+    const timerRef = document.querySelector(this.selector);
+    return {
+      days: timerRef.querySelector('[data-value="days"]'),
+      hours: timerRef.querySelector('[data-value="hours"]'),
+      mins: timerRef.querySelector('[data-value="mins"]'),
+      secs: timerRef.querySelector('[data-value="secs"]'),
+    };
   }
 
   pad(value) {
     return String(value).padStart(2, "0");
   }
 
-  getTimeComponents(time) {
+  updateClockface(time) {
     const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
     const hours = this.pad(
       Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
     );
     const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
     const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
-    return { days, hours, mins, secs };
+
+    this.getRefs().days.textContent = days;
+    this.getRefs().hours.textContent = hours;
+    this.getRefs().mins.textContent = mins;
+    this.getRefs().secs.textContent = secs;
   }
 
-  updateClockface({ days, hours, mins, secs }) {
-    refs.getDays.textContent = days;
-    refs.getHours.textContent = hours;
-    refs.getMins.textContent = mins;
-    refs.getSecs.textContent = secs;
-  }
-
-  start() {
-    const startTime = this.targetDate.getTime();
+  timer() {
     setInterval(() => {
       const currentTime = Date.now();
-      const deltaTime = startTime - currentTime;
-      const { days, hours, mins, secs } = this.getTimeComponents(deltaTime);
-      this.updateClockface({ days, hours, mins, secs });
+      const deltaTime = this.targetDate - currentTime;
+      this.updateClockface(deltaTime);
     }, 1000);
   }
 }
